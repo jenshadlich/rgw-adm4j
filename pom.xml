@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>de.jeha.rgw-adm4j</groupId>
+    <artifactId>rgw-adm4j</artifactId>
+    <name>${project.artifactId}</name>
+    <packaging>jar</packaging>
+    <version>0.1-SNAPSHOT</version>
+    <description>Ceph rgw admin ops client for Java</description>
+
+    <scm>
+        <connection>scm:git:git://github.com/jenshadlich/radosgw-admin4j.git</connection>
+        <developerConnection>scm:git:https://github.com/jenshadlich/radosgw-admin4j.git</developerConnection>
+        <url>https://github.com/jenshadlich/radosgw-admin4j.git</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <properties>
+        <project.target.jdk>1.8</project.target.jdk>
+        <project.source.jdk>1.8</project.source.jdk>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <slf4j.version>1.7.25</slf4j.version>
+        <junit.version>4.12</junit.version>
+
+        <buildTime>${maven.build.timestamp}</buildTime>
+        <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ss</maven.build.timestamp.format>
+        <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+        <buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>
+    </properties>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>  <!-- git commit id in status resource -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>${buildnumber-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <doCheck>false</doCheck>
+                    <doUpdate>false</doUpdate>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
