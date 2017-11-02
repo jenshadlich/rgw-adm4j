@@ -2,6 +2,7 @@ package de.jeha.rgwadm4j;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import de.jeha.rgwadm4j.model.BucketStats;
+import de.jeha.rgwadm4j.model.UserInfo;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -33,11 +34,18 @@ public class RgwAdmClientTest {
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
                         .withBodyFile("simple_bucket_stats.json")));
+        stubFor(any(urlPathEqualTo("/admin/user"))
+                .withQueryParam("format", equalTo("json"))
+                .withQueryParam("uid", equalTo("u"))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withHeader("Content-Type", "application/json")
+                        .withBodyFile("user_info.json")));
     }
 
     @Test
-    public void test() throws IOException {
-        List<BucketStats> stats =
+    public void getBucketStats() throws IOException {
+        final List<BucketStats> stats =
                 new RgwAdmClient("A", "S", "http://localhost:18080").getBucketStats();
 
         LOG.debug("{}", stats.get(0));
@@ -48,4 +56,13 @@ public class RgwAdmClientTest {
         assertEquals(42, stats.get(0).getNumObjects());
     }
 
+    @Test
+    public void getUserInfo() throws IOException {
+        final UserInfo userInfo =
+                new RgwAdmClient("A", "S", "http://localhost:18080").getUserInfo("u");
+
+        LOG.debug("{}", userInfo);
+
+        assertEquals("u", userInfo.getUserId());
+    }
 }
