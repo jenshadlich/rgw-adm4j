@@ -44,7 +44,7 @@ public class RgwAdmClientTest {
         assertEquals(1, stats.size());
         assertEquals("my-bucket", stats.get(0).getBucket());
         assertEquals("the-owner", stats.get(0).getOwner());
-        assertEquals(1234, stats.get(0).getSize());
+        assertEquals(1234, stats.get(0).getSizeKB());
         assertEquals(42, stats.get(0).getNumObjects());
     }
 

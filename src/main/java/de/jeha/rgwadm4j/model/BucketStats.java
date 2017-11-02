@@ -11,13 +11,13 @@ public class BucketStats {
     private final String bucket;
     private final String owner;
     private final long numObjects;
-    private final long size;
+    private final long sizeKB;
 
-    public BucketStats(String bucket, String owner, long numObjects, long size) {
+    public BucketStats(String bucket, String owner, long numObjects, long sizeKB) {
         this.bucket = bucket;
         this.owner = owner;
         this.numObjects = numObjects;
-        this.size = size;
+        this.sizeKB = sizeKB;
     }
 
     public String getBucket() {
@@ -32,8 +32,8 @@ public class BucketStats {
         return numObjects;
     }
 
-    public long getSize() {
-        return size;
+    public long getSizeKB() {
+        return sizeKB;
     }
 
     @Override

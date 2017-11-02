@@ -58,9 +58,9 @@ public class RgwAdmClient {
             final String bucket = o.get("bucket").getAsString();
             final String owner = o.get("owner").getAsString();
             final long numObject = rgwUsage.get("num_objects").getAsLong();
-            final long size = rgwUsage.get("size").getAsLong();
+            final long sizeKB = rgwUsage.get("size_kb").getAsLong();
 
-            bucketStats.add(new BucketStats(bucket, owner, numObject, size));
+            bucketStats.add(new BucketStats(bucket, owner, numObject, sizeKB));
         }
 
         return bucketStats;
