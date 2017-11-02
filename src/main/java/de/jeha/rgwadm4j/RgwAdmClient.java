@@ -13,6 +13,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,6 +27,8 @@ import java.util.List;
  */
 public class RgwAdmClient {
 
+    private static final Logger LOG = LoggerFactory.getLogger(RgwAdmClient.class);
+
     private final RgwAdmConfig rgwAdmConfig;
 
     public RgwAdmClient(String accessKey, String secretKey, String endpoint) {
@@ -34,8 +38,7 @@ public class RgwAdmClient {
     public List<BucketStats> getBucketStats() throws IOException {
         final CloseableHttpClient httpClient = buildHttpClient();
         final HttpGet request = new HttpGet(rgwAdmConfig.getEndpoint() + "/admin/bucket?format=json&stats=true");
-        final Date date = new Date();
-        final String dateString = RFC822Date.format(date);
+        final String dateString = RFC822Date.format(new Date());
         final String authorization =
                 AuthorizationUtils.computeAuthorization(rgwAdmConfig.getAccessKey(), rgwAdmConfig.getSecretKey(), "GET", dateString, "/admin/bucket");
 
@@ -44,7 +47,7 @@ public class RgwAdmClient {
 
         final HttpResponse response = httpClient.execute(request);
 
-        System.out.println(response.getStatusLine());
+        LOG.debug("{}", response.getStatusLine());
 
         final List<BucketStats> bucketStats = new ArrayList<>();
         final JsonParser jsonParser = new JsonParser();
@@ -76,7 +79,6 @@ public class RgwAdmClient {
                 .setDefaultRequestConfig(config)
                 .setUserAgent("rgw-adm4j")
                 .build();
-
     }
 
 }
