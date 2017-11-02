@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 /**
  * @author jenshadlich@googlemail.com
  */
-public abstract class Base {
+public abstract class BaseModel {
 
     @Override
     public String toString() {
