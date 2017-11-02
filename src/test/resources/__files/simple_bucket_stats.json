@@ -1,0 +1,12 @@
+[
+  {
+    "bucket": "my-bucket",
+    "owner": "the-owner",
+    "usage": {
+      "rgw.main": {
+        "size": 1234,
+        "num_objects": 42
+      }
+    }
+  }
+]
