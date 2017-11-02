@@ -49,9 +49,14 @@ public class RgwAdmClient {
 
         LOG.debug("{}", response.getStatusLine());
 
+        return mapBucketStats(new InputStreamReader(response.getEntity().getContent()));
+    }
+
+    private List<BucketStats> mapBucketStats(InputStreamReader reader) {
         final List<BucketStats> bucketStats = new ArrayList<>();
         final JsonParser jsonParser = new JsonParser();
-        for (JsonElement e : jsonParser.parse(new InputStreamReader(response.getEntity().getContent())).getAsJsonArray()) {
+
+        for (JsonElement e : jsonParser.parse(reader).getAsJsonArray()) {
             final JsonObject o = e.getAsJsonObject();
             final JsonObject rgwUsage = o.getAsJsonObject("usage").getAsJsonObject("rgw.main");
 

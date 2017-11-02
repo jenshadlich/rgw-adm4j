@@ -1,12 +1,9 @@
 package de.jeha.rgwadm4j.model;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 /**
  * @author jenshadlich@googlemail.com
  */
-public class BucketStats {
+public class BucketStats extends Base {
 
     private final String bucket;
     private final String owner;
@@ -34,11 +31,6 @@ public class BucketStats {
 
     public long getSizeKB() {
         return sizeKB;
-    }
-
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
 }
