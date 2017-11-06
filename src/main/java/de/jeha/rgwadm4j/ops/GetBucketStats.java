@@ -33,12 +33,20 @@ public class GetBucketStats extends AbstractOperation<List<BucketStats>> {
 
         for (JsonElement e : jsonParser.parse(reader).getAsJsonArray()) {
             final JsonObject o = e.getAsJsonObject();
-            final JsonObject rgwUsage = o.getAsJsonObject("usage").getAsJsonObject("rgw.main");
+            final JsonObject usageRgwMain = o.getAsJsonObject("usage").getAsJsonObject("rgw.main");
 
             final String bucket = o.get("bucket").getAsString();
             final String owner = o.get("owner").getAsString();
-            final long numObject = rgwUsage.get("num_objects").getAsLong();
-            final long sizeKB = rgwUsage.get("size_kb").getAsLong();
+
+            final long numObject;
+            final long sizeKB;
+            if (usageRgwMain == null) {
+                numObject = 0L;
+                sizeKB = 0L;
+            }else {
+                numObject = usageRgwMain.get("num_objects").getAsLong();
+                sizeKB = usageRgwMain.get("size_kb").getAsLong();
+            }
 
             bucketStats.add(new BucketStats(bucket, owner, numObject, sizeKB));
         }
